@@ -1,0 +1,16 @@
+#!/usr/bin/execlineb -S0
+
+cd /
+fdclose 0
+redirfd -w 1 /dev/console
+fdmove -c 2 1
+
+foreground { s6-echo "Shutting down system." }
+
+foreground { s6-echo "Syncing disks." }
+foreground { s6-sync }
+
+foreground { s6-rc -ad change }
+
+foreground { s6-echo "Performing "${1}"." }
+s6-${1}
