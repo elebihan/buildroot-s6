@@ -1,0 +1,6 @@
+config BR2_PACKAGE_HOST_S6_RC
+	bool "host s6-rc tools"
+	help
+	  Host tools from s6-rc for managing the service database.
+
+	  http://skarnet.org/software/s6-rc/

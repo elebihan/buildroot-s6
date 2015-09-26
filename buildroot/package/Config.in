@@ -1481,6 +1481,7 @@ endif
 	source "package/s6-linux-init/Config.in"
 	source "package/s6-linux-utils/Config.in"
 	source "package/s6-portable-utils/Config.in"
+	source "package/s6-rc/Config.in"
 	source "package/smack/Config.in"
 if BR2_PACKAGE_BUSYBOX_SHOW_OTHERS
 	source "package/start-stop-daemon/Config.in"
