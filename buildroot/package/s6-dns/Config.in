@@ -1,0 +1,12 @@
+config BR2_PACKAGE_S6_DNS
+	bool "s6-dns"
+	depends on BR2_TOOLCHAIN_USES_GLIBC || BR2_TOOLCHAIN_USES_MUSL
+	select BR2_PACKAGE_SKALIBS
+	help
+	  s6-dns is a suite of DNS client programs and libraries for Unix
+	  systems, as an alternative to the BIND, djbdns or other DNS clients.
+
+	  http://skarnet.org/software/s6-dns/
+
+comment "s6-dns needs an (e)glibc or musl toolchain"
+	depends on !BR2_TOOLCHAIN_USES_GLIBC && !BR2_TOOLCHAIN_USES_MUSL

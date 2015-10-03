@@ -1,0 +1,13 @@
+#!/usr/bin/execlineb -P
+
+if -nt
+{
+  if { s6-echo "Initializing system." }
+  if { s6-mkdir -p /dev/pts }
+  if { s6-mkdir -p /dev/shm }
+  if { s6-rc-init /run/service }
+  if { s6-rc -v 3 change operating }
+}
+
+redirfd -w 1 /dev/console
+s6-echo "Failed to initialize system. Please log in and investigate!"
