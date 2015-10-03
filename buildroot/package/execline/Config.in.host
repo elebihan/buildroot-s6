@@ -1,0 +1,7 @@
+config BR2_PACKAGE_HOST_EXECLINE
+	bool "host execline"
+	help
+	  Host version of execline, a (non-interactive) scripting language,
+	  like sh.
+
+	  http://skarnet.org/software/execline/
