@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-S6_LINUX_UTILS_VERSION = v2.0.2.2
+S6_LINUX_UTILS_VERSION = v2.0.2.3
 S6_LINUX_UTILS_SITE = git://git.skarnet.org/s6-linux-utils.git
 S6_LINUX_UTILS_LICENSE = ISC
 S6_LINUX_UTILS_LICENSE_FILES = COPYING
