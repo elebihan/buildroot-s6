@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-S6_LINUX_INIT_VERSION = v0.0.1.3
+S6_LINUX_INIT_VERSION = v0.0.1.4
 S6_LINUX_INIT_SITE = git://git.skarnet.org/s6-linux-init.git
 S6_LINUX_INIT_LICENSE = ISC
 S6_LINUX_INIT_LICENSE_FILES = COPYING
