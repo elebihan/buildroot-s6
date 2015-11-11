@@ -1,6 +1,0 @@
-syslogd
-klogd
-fdholder
-init-urandom
-fifodir-cleanup
-network

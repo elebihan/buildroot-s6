@@ -1,5 +1,0 @@
-fdh    -1 fdh    -1 - /home   -
-log    -1 log    -1 - /var/log   -
-fdhlog -1 fdhlog -1 - /var/log/fdholder -
-klog   -1 klog   -1 - /var/log/klogd   -
-syslog -1 syslog -1 - /var/log/syslogd -
