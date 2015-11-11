@@ -1,0 +1,5 @@
+if { mkdir -p -m 0755 -- /dev/pts }
+if { s6-mount -wt devpts -o noexec,nosuid,gid=0,mode=0600 devpts /dev/pts }
+if { mkdir -p -m 0777 -- /dev/shm }
+if { s6-mount -wt tmpfs tmpfs /dev/shm }
+if { s6-ln -s /dev/shm /run/shm }

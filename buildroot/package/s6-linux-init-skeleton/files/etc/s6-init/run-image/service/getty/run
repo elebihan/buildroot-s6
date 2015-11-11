@@ -1,0 +1,2 @@
+#!/usr/bin/execlineb -P
+getty -L -H DEBUG 115200 @GETTY_PORT@
