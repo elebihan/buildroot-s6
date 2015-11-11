@@ -1,0 +1,9 @@
+#!/usr/bin/execlineb -P
+
+redirfd -w 1 /dev/console
+fdmove -c 2 1
+foreground { s6-echo "\nTearing down system." }
+foreground { s6-echo "Synchronizing disks." }
+foreground { sync }
+foreground { s6-echo "Stopping services." }
+s6-rc -da -v 2 change

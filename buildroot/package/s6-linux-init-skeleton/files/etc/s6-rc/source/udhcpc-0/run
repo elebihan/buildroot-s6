@@ -1,0 +1,4 @@
+#!/usr/bin/execlineb -P
+fdmove -c 2 1
+fdmove 1 3
+udhcpc -f -i @DHCP_IFACE@ -x lease:86400
