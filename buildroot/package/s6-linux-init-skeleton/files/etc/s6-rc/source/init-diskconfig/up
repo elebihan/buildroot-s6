@@ -1,0 +1,2 @@
+if { mkdir -p -m 0755 -- /run/disk-devices }
+if { redirfd -w 1 /run/disk-devices/root s6-echo sda }

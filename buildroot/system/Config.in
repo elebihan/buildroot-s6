@@ -72,6 +72,13 @@ config BR2_INIT_BUSYBOX
 	select BR2_PACKAGE_BUSYBOX
 	select BR2_PACKAGE_INITSCRIPTS
 
+config BR2_INIT_S6_INIT
+	bool "s6 init"
+	select BR2_PACKAGE_S6_LINUX_INIT_SKELETON
+
+comment "s6 init needs an (e)glibc or musl toolchain"
+	depends on !BR2_TOOLCHAIN_USES_GLIBC && !BR2_TOOLCHAIN_USES_MUSL
+
 config BR2_INIT_SYSV
 	bool "systemV"
 	select BR2_PACKAGE_BUSYBOX_SHOW_OTHERS # sysvinit
@@ -100,7 +107,7 @@ config BR2_INIT_NONE
 endchoice
 
 choice
-	prompt "/dev management" if !BR2_INIT_SYSTEMD
+	prompt "/dev management" if !(BR2_INIT_SYSTEMD || BR2_INIT_S6_INIT)
 	default BR2_ROOTFS_DEVICE_CREATION_DYNAMIC_DEVTMPFS
 
 config BR2_ROOTFS_DEVICE_CREATION_STATIC
@@ -128,6 +135,9 @@ endchoice
 
 comment "/dev management using udev (from systemd)"
 	depends on BR2_INIT_SYSTEMD
+
+comment "/dev management using s6-devd"
+	depends on BR2_INIT_S6_INIT
 
 config BR2_ROOTFS_DEVICE_TABLE
 	string "Path to the permission tables"
