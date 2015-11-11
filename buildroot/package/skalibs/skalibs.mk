@@ -12,6 +12,7 @@ SKALIBS_INSTALL_STAGING = YES
 
 SKALIBS_CONFIGURE_OPTS = \
 	--prefix=/usr \
+	--enable-force-devr \
 	--with-default-path=/sbin:/usr/sbin:/bin:/usr/bin
 
 ifeq ($(BR2_STATIC_LIBS),y)
