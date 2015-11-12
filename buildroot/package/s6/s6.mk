@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-S6_VERSION = v2.2.2.0
+S6_VERSION = v2.2.3.1
 S6_SITE = git://git.skarnet.org/s6.git
 S6_LICENSE = ISC
 S6_LICENSE_FILES = COPYING
