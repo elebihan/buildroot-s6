@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-SKALIBS_VERSION = v2.3.7.0
+SKALIBS_VERSION = v2.3.8.0
 SKALIBS_SITE = git://git.skarnet.org/skalibs.git
 SKALIBS_LICENSE = ISC
 SKALIBS_LICENSE_FILES = COPYING
@@ -12,6 +12,7 @@ SKALIBS_INSTALL_STAGING = YES
 
 SKALIBS_CONFIGURE_OPTS = \
 	--prefix=/usr \
+	--enable-force-devr \
 	--with-default-path=/sbin:/usr/sbin:/bin:/usr/bin
 
 ifeq ($(BR2_STATIC_LIBS),y)

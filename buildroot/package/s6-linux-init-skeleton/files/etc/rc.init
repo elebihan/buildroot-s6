@@ -1,0 +1,12 @@
+#!/usr/bin/execlineb -P
+
+if -nt
+{
+  if { s6-echo "Initializing system." }
+  if { s6-rc-init /run/service }
+  if { s6-echo "Starting services." }
+  if { s6-rc -v 2 -u change ok-all }
+}
+
+redirfd -w 1 /dev/console
+s6-echo "Failed to initialize system. Please log in and investigate!"

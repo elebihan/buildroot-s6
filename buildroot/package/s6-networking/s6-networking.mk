@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-S6_NETWORKING_VERSION = v2.1.0.2
+S6_NETWORKING_VERSION = v2.1.0.4
 S6_NETWORKING_SITE = git://git.skarnet.org/s6-networking.git
 S6_NETWORKING_LICENSE = ISC
 S6_NETWORKING_LICENSE_FILES = COPYING
