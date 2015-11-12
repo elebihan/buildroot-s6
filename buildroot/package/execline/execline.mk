@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-EXECLINE_VERSION = v2.1.4.2
+EXECLINE_VERSION = v2.1.4.4
 EXECLINE_SITE = git://git.skarnet.org/execline.git
 EXECLINE_LICENSE = ISC
 EXECLINE_LICENSE_FILES = COPYING

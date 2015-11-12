@@ -1,5 +1,13 @@
 # What's New in buildroot-s6?
 
+## [0.2.2] - 2015-11-12
+### Changed
+
+- s6-rc: bump version to 0.0.1.5
+- s6: bump version to 2.2.3.1
+- execline: bump version to 2.1.4.4
+- skalibs: bump version to 2.3.8.2
+
 ## [0.2.0] - 2015-11-12
 ### Added
 
@@ -18,4 +26,3 @@
 - s6: bump version to 2.2.2.0
 - execline: bump version to 2.1.4.1
 - skalibs: bump version to 2.3.7.1
-
