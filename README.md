@@ -25,12 +25,12 @@ In this configuration, all the programs are built using the
 a firmware, execute:
 
 ```sh
-$ make BR2_EXTERNAL=$PWD/custom O=$HOME/build/demo-s6/qemu/x86 -C buildroot demo_s6_qemu_x86_defconfig
-$ make O=$HOME/build/demo-s6/qemu/x86 -C buildroot
+$ make BR2_EXTERNAL=$PWD/custom O=$PWD/output-x86 -C buildroot demo_s6_qemu_x86_defconfig
+$ make O=$PWD/output-x86 -C buildroot
 ```
 
 Once the build is finished, the images for QEMU are available in
-``$HOME/build/demo-s6/qemu/x86/images``.
+``./output-x86/images``.
 
 ### Raspberry Pi
 
@@ -39,9 +39,9 @@ In this configuration, all the programs are built using
 firmware, execute:
 
 ```sh
-$ make BR2_EXTERNAL=$PWD/custom O=$HOME/build/demo-s6/rpi -C buildroot demo_s6_rpi_defconfig
-$ make O=$HOME/build/demo-s6/rpi -C buildroot
+$ make BR2_EXTERNAL=$PWD/custom O=$PWD/output-rpi -C buildroot demo_s6_rpi_defconfig
+$ make O=$PWD/output-rpi -C buildroot
 ```
 
 Once the build is finished, the images for the SD card are available in
-``$HOME/build/demo-s6/rpi/images``.
+``$./output-rpi/images``.
