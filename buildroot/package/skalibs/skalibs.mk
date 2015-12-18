@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-SKALIBS_VERSION = v2.3.8.2
+SKALIBS_VERSION = v2.3.8.3
 SKALIBS_SITE = git://git.skarnet.org/skalibs.git
 SKALIBS_LICENSE = ISC
 SKALIBS_LICENSE_FILES = COPYING
