@@ -5,7 +5,7 @@ if -nt
   if { s6-echo "Initializing system." }
   if { s6-rc-init /run/service }
   if { s6-echo "Starting services." }
-  if { s6-rc -v 2 -u change ok-all }
+  if { s6-rc -v 2 -u change bundle-all }
 }
 
 redirfd -w 1 /dev/console
