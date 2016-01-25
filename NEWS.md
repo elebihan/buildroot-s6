@@ -1,5 +1,15 @@
 # What's New in buildroot-s6?
 
+## [0.4.0] - 2016-01-25
+### Changed
+
+- rename ok-\* bundles to bundle\-*
+- s6: bump version to 2.2.4.3
+- skalibs: bump version to 2.3.9.0
+- s6-rc: bump version to 0.0.2.1
+- execline: bump version to 2.1.4.5
+- buildroot: bump version to 2015.11
+
 ## [0.2.2] - 2015-11-12
 ### Changed
 
