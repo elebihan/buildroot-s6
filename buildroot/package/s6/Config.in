@@ -1,6 +1,5 @@
 config BR2_PACKAGE_S6
 	bool "s6"
-	depends on BR2_TOOLCHAIN_USES_GLIBC || BR2_TOOLCHAIN_USES_MUSL
 	select BR2_PACKAGE_EXECLINE
 	help
 	  s6 is a small suite of programs for UNIX, designed to allow process
@@ -8,6 +7,3 @@ config BR2_PACKAGE_S6
 	  and runit, as well as various operations on processes and daemons.
 
 	  http://skarnet.org/software/s6/
-
-comment "s6 needs an (e)glibc or musl toolchain"
-	depends on !BR2_TOOLCHAIN_USES_GLIBC && !BR2_TOOLCHAIN_USES_MUSL
