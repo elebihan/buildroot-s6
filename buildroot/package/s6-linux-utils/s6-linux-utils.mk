@@ -23,8 +23,13 @@ else
 S6_LINUX_UTILS_CONFIGURE_OPTS +=  --disable-static --enable-shared --disable-allstatic
 endif
 
+ifeq ($(BR2_TOOLCHAIN_USES_UCLIBC),y)
+S6_LINUX_UTILS_CONFIGURE_ENV = LDFLAGS="-lrt"
+endif
+
 define S6_LINUX_UTILS_CONFIGURE_CMDS
-	(cd $(@D); $(TARGET_CONFIGURE_OPTS) ./configure $(S6_LINUX_UTILS_CONFIGURE_OPTS))
+	(cd $(@D); $(TARGET_CONFIGURE_OPTS) $(S6_LINUX_UTILS_CONFIGURE_ENV) \
+		./configure $(S6_LINUX_UTILS_CONFIGURE_OPTS))
 endef
 
 define S6_LINUX_UTILS_BUILD_CMDS
