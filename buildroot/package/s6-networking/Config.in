@@ -1,6 +1,5 @@
 config BR2_PACKAGE_S6_NETWORKING
 	bool "s6-networking"
-	depends on BR2_TOOLCHAIN_USES_GLIBC || BR2_TOOLCHAIN_USES_MUSL
 	select BR2_PACKAGE_S6_DNS
 	select BR2_PACKAGE_S6
 	help
@@ -10,6 +9,3 @@ config BR2_PACKAGE_S6_NETWORKING
 	  IDENT protocol management and clock synchronization.
 
 	  http://skarnet.org/software/s6-networking/
-
-comment "s6-networking needs an (e)glibc or musl toolchain"
-	depends on !BR2_TOOLCHAIN_USES_GLIBC && !BR2_TOOLCHAIN_USES_MUSL
