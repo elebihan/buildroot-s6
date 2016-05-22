@@ -1,5 +1,10 @@
 # What's New in buildroot-s6?
 
+## [0.6.0] - 2016-05-22
+### Changed
+
+- buildroot: bump version to 2016.02
+
 ## [0.4.0] - 2016-01-25
 ### Changed
 
