@@ -33,7 +33,7 @@ Once the build is finished, the images for QEMU are available in
 ``./output-x86/images``. Run it like this:
 
 ```sh
-$ qemu-system-i386 -kernel output-x86/images/bzImage -append root=0800 -hda output-x86/images/rootfs.ext2
+$ qemu-system-i386 -M pc -kernel output-x86/images/bzImage -drive file=output-x86/images/rootfs.ext2,if=ide,format=raw -append "root=/dev/sda"
 ```
 
 ### Raspberry Pi
