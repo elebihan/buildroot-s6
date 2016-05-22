@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-S6_PORTABLE_UTILS_VERSION = v2.0.5.3
+S6_PORTABLE_UTILS_VERSION = v2.0.6.0
 S6_PORTABLE_UTILS_SITE = git://git.skarnet.org/s6-portable-utils.git
 S6_PORTABLE_UTILS_LICENSE = ISC
 S6_PORTABLE_UTILS_LICENSE_FILES = COPYING

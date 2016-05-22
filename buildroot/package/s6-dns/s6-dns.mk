@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-S6_DNS_VERSION = v2.0.0.7
+S6_DNS_VERSION = v2.0.1.0
 S6_DNS_SITE = git://git.skarnet.org/s6-dns.git
 S6_DNS_LICENSE = ISC
 S6_DNS_LICENSE_FILES = COPYING
