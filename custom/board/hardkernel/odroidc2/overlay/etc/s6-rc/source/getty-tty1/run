@@ -1,0 +1,2 @@
+#!/usr/bin/execlineb -P
+getty -L -H MAIN 115200 tty1
