@@ -13,12 +13,14 @@ LIBINPUT_LICENSE = MIT
 LIBINPUT_LICENSE_FILES = COPYING
 # Tests need fork, so just disable them everywhere.
 LIBINPUT_CONF_OPTS = --disable-tests --disable-libwacom
+# Patching configure.ac
+LIBINPUT_AUTORECONF = YES
 
 ifeq ($(BR2_PACKAGE_LIBGTK3),y)
 LIBINPUT_CONF_OPTS += --enable-event-gui
 LIBINPUT_DEPENDENCIES += libgtk3
 else
-LIBINOUT_CONF_OPTS += --disable-event-gui
+LIBINPUT_CONF_OPTS += --disable-event-gui
 endif
 
 $(eval $(autotools-package))
