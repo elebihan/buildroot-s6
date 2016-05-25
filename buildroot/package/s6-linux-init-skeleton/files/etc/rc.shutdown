@@ -4,4 +4,4 @@ foreground { s6-echo "Synchronizing disks." }
 foreground { s6-sync }
 foreground { s6-mount -o ro,remount /dev/root / }
 foreground { s6-echo "Performing "${1}"." }
-s6-${1}
+s6-${1} -f
