@@ -17,11 +17,31 @@ define S6_LINUX_INIT_SKELETON_INSTALL_TARGET_CMDS
 	cp -a package/s6-linux-init-skeleton/files/* $(TARGET_DIR)/
 endef
 
-define S6_LINUX_INIT_SKELETON_INSTALL_INIT_S6_INIT
-	sed -i -e 's/@GETTY_PORT@/$(S6_LINUX_INIT_SKELETON_GETTY_PORT)/g' \
+ifneq ($(S6_LINUX_INIT_SKELETON_DHCP_IFACE),)
+define S6_LINUX_INIT_SKELETON_INSTALL_DHCPC
+	cp -a $(TARGET_DIR)/etc/s6-rc/template/udhcpc-@ \
+		$(TARGET_DIR)/etc/s6-rc/source/udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)
+	sed -i -e 's/@NAME@/$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)/g' \
+		$(TARGET_DIR)/etc/s6-rc/source/udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)/*
+	cp -a $(TARGET_DIR)/etc/s6-rc/template/udhcpc-@-log \
+		$(TARGET_DIR)/etc/s6-rc/source/udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)-log
+	sed -i -e 's/@NAME@/$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)/g' \
+		$(TARGET_DIR)/etc/s6-rc/source/udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)-log/*
+	echo udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE) >> \
+		$(TARGET_DIR)/etc/s6-rc/source/bundle-lan/contents
+endef
+endif
+
+ifneq ($(S6_LINUX_INIT_SKELETON_GETTY_PORT),)
+define S6_LINUX_INIT_SKELETON_INSTALL_GETTY
+	sed -i -e 's/@NAME@/$(S6_LINUX_INIT_SKELETON_GETTY_PORT)/g' \
 		$(TARGET_DIR)/etc/s6-init/run-image/service/getty/run
-	sed -i -e 's/@DHCP_IFACE@/$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)/g' \
-		$(TARGET_DIR)/etc/s6-rc/source/udhcpc-0/run
+endef
+endif
+
+define S6_LINUX_INIT_SKELETON_INSTALL_INIT_S6_INIT
+	$(S6_LINUX_INIT_SKELETON_INSTALL_GETTY)
+	$(S6_LINUX_INIT_SKELETON_INSTALL_DHCPC)
 endef
 
 define S6_LINUX_INIT_SKELETON_BUILD_SERVICE_DB
