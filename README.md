@@ -15,6 +15,7 @@ Several predefined configurations to showcase s6 are provided:
 
 - QEMU/x86
 - Raspberry Pi
+- HardKernel ODROID-C2
 
 ## How to Build a Firmware
 
@@ -55,3 +56,16 @@ $ make O=$PWD/output-rpi -C buildroot
 
 Once the build is finished, the images for the SD card are available in
 ``$./output-rpi/images``.
+
+### ODROID-C2
+
+In this configuration, all the programs are built using the GNU libc and
+dynamically linked. To build a firmware, execute:
+
+```sh
+$ make BR2_EXTERNAL=$PWD/custom O=$PWD/output-odroidc2 -C buildroot demo_s6_odroidc2_defconfig
+$ make O=$PWD/output-odroidc2 -C buildroot
+```
+
+Once the build is finished, the images for the SD card are available in
+``./output-odroidc2/images``.
