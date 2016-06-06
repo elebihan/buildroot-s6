@@ -29,6 +29,7 @@ define S6_LINUX_INIT_SKELETON_INSTALL_DHCPC
 		$(TARGET_DIR)/etc/s6-rc/source/udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)-log/*
 	echo udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE) >> \
 		$(TARGET_DIR)/etc/s6-rc/source/bundle-lan/contents
+	ln -sf ../run/resolv.conf $(TARGET_DIR)/etc/resolv.conf
 endef
 endif
 
