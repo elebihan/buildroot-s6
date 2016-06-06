@@ -55,7 +55,7 @@ $ make O=$PWD/output-rpi -C buildroot
 ```
 
 Once the build is finished, the images for the SD card are available in
-``$./output-rpi/images``.
+``./output-rpi/images``.
 
 ### ODROID-C2
 
