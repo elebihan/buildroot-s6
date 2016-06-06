@@ -33,7 +33,13 @@ Once the build is finished, the images for QEMU are available in
 ``./output-x86/images``. Run it like this:
 
 ```sh
-$ qemu-system-i386 -M pc -kernel output-x86/images/bzImage -drive file=output-x86/images/rootfs.ext2,if=virtio,format=raw -append "root=/dev/vda" -net nic,model=virtio -net user
+$ qemu-system-i386 -M pc -kernel output-x86/images/bzImage -drive file=output-x86/images/rootfs.ext2,if=virtio,format=raw -append "root=/dev/vda" -net nic,model=virtio -net user,hostfwd=tcp::2222-:22
+```
+
+It is possible to connect via SSH to the target using:
+
+```sh
+$ ssh -p 2222 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@localhost
 ```
 
 ### Raspberry Pi
