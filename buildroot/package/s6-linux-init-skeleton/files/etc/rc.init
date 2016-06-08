@@ -4,6 +4,7 @@ if -nt
 {
   if { s6-echo "Mounting /proc." }
   if { s6-mount -wt proc proc /proc }
+  if { s6-init-check-rootfs }
   if { s6-echo "Initializing system." }
   if { s6-rc-init /run/service }
   if { s6-echo "Starting services." }
