@@ -1,6 +1,0 @@
-if { mkdir -p -m 0755 -- /run/disk-devices }
-if
-{
-   redirfd -w 1 /run/disk-devices/root pipeline
-     { cat /proc/cmdline } sed -ne s,^.*root=\\([^[:space:]]*\\).*,\\1,p
-}
