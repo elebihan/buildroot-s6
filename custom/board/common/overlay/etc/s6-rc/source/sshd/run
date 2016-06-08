@@ -6,12 +6,20 @@
 # Otherwise, rootfs is R/O, so create a directory in volatile storage
 if
 {
-   backtick -in CONF_DIR { readlink /etc/dropbear }
+   backtick -n CONF_DIR { readlink /etc/dropbear }
    import -u CONF_DIR
-   if { s6-test -L /etc/dropbear -a $CONF_DIR = /var/run/dropbear }
+   if -t { s6-test -L /etc/dropbear -a "$CONF_DIR" = "/var/run/dropbear" }
      ifthenelse { s6-rmrf /etc/dropbear }
                 { s6-mkdir -p /etc/dropbear }
-                { s6-mkdir -p $CONF_DIR }
+                {
+                  foreground
+                  {
+                    s6-echo "No persistent location to store SSH host keys."
+                    "New keys will be generated at each boot."
+                    "Are you sure this is what you want to do?"
+                  }
+                  s6-mkdir -p $CONF_DIR
+                }
 }
 
 fdmove -c 2 1
