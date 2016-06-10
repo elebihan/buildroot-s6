@@ -19,10 +19,12 @@ endef
 
 ifneq ($(S6_LINUX_INIT_SKELETON_DHCP_IFACE),)
 define S6_LINUX_INIT_SKELETON_INSTALL_DHCPC
+	rm -rf $(TARGET_DIR)/etc/s6-rc/source/udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)
 	cp -a $(TARGET_DIR)/etc/s6-rc/template/udhcpc-@ \
 		$(TARGET_DIR)/etc/s6-rc/source/udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)
 	$(SED) 's/@NAME@/$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)/g' \
 		$(TARGET_DIR)/etc/s6-rc/source/udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)/*
+	rm -rf $(TARGET_DIR)/etc/s6-rc/source/udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)-log
 	cp -a $(TARGET_DIR)/etc/s6-rc/template/udhcpc-@-log \
 		$(TARGET_DIR)/etc/s6-rc/source/udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)-log
 	$(SED) 's/@NAME@/$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)/g' \
