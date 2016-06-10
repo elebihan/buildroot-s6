@@ -1,0 +1,10 @@
+config BR2_PACKAGE_S6_LINUX_INIT_SERVICES
+	bool "s6-linux-init-services"
+	depends on BR2_PACKAGE_S6_LINUX_INIT_SKELETON
+	help
+	  Collection of s6-rc services to run various programs with a s6-based
+	  init system.
+
+	  The supported programs are:
+
+	  - dropbear
