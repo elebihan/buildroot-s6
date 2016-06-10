@@ -1,0 +1,29 @@
+#!/usr/bin/execlineb -P
+
+# Check if /etc/dropbear is a symbolic link.
+# If true and it can be removed, then rootfs is R/W, so create directory
+# for persistent storage
+# Otherwise, rootfs is R/O, so create a directory in volatile storage
+if
+{
+   backtick -n CONF_DIR { readlink /etc/dropbear }
+   import -u CONF_DIR
+   if -t { s6-test -L /etc/dropbear -a "$CONF_DIR" = "/var/run/dropbear" }
+     ifthenelse { s6-rmrf /etc/dropbear }
+                { s6-mkdir -p /etc/dropbear }
+                {
+                  foreground
+                  {
+                    s6-echo "No persistent location to store SSH host keys."
+                    "New keys will be generated at each boot."
+                    "Are you sure this is what you want to do?"
+                  }
+                  s6-mkdir -p $CONF_DIR
+                }
+}
+
+fdmove -c 2 1
+fdmove 1 3
+s6-tcpserver4 -v 2 -1 -- 0.0.0.0 22
+s6-tcpserver-access -v 2 -DRl0 -t 5000 -i data/rules --
+dropbear -i -K 60 -R
