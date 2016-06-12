@@ -7,4 +7,5 @@ init-coldplug
 init-urandom
 init-sysctl
 fifodir-cleanup
+rngd
 getty-tty1
