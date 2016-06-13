@@ -17,20 +17,28 @@ define S6_LINUX_INIT_SKELETON_INSTALL_TARGET_CMDS
 	cp -a package/s6-linux-init-skeleton/files/* $(TARGET_DIR)/
 endef
 
+define S6_RENDER_TEMPLATE
+	rm -rf $(TARGET_DIR)/etc/s6-rc/source/$(1)-$(2)$(3)
+	cp -a $(TARGET_DIR)/etc/s6-rc/template/$(1)-@$(3) \
+		$(TARGET_DIR)/etc/s6-rc/source/$(1)-$(2)$(3)
+	$(SED) 's/@NAME@/$(2)/g' $(TARGET_DIR)/etc/s6-rc/source/$(1)-$(2)$(3)/*
+endef
+
+define S6_GEN_SERVICE
+	$(call S6_RENDER_TEMPLATE,$(1),$(2))
+	$(if $(3),$(call S6_RENDER_TEMPLATE,$(1),$(2),-log))
+endef
+
+define S6_ADD_SERVICE
+	if ! grep -q $(1) $(TARGET_DIR)/etc/s6-rc/source/$(2)/contents; then \
+		echo $(1) >> $(TARGET_DIR)/etc/s6-rc/source/$(2)/contents; \
+	fi
+endef
+
 ifneq ($(S6_LINUX_INIT_SKELETON_DHCP_IFACE),)
 define S6_LINUX_INIT_SKELETON_INSTALL_DHCPC
-	rm -rf $(TARGET_DIR)/etc/s6-rc/source/udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)
-	cp -a $(TARGET_DIR)/etc/s6-rc/template/udhcpc-@ \
-		$(TARGET_DIR)/etc/s6-rc/source/udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)
-	$(SED) 's/@NAME@/$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)/g' \
-		$(TARGET_DIR)/etc/s6-rc/source/udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)/*
-	rm -rf $(TARGET_DIR)/etc/s6-rc/source/udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)-log
-	cp -a $(TARGET_DIR)/etc/s6-rc/template/udhcpc-@-log \
-		$(TARGET_DIR)/etc/s6-rc/source/udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)-log
-	$(SED) 's/@NAME@/$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)/g' \
-		$(TARGET_DIR)/etc/s6-rc/source/udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)-log/*
-	echo udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE) >> \
-		$(TARGET_DIR)/etc/s6-rc/source/bundle-lan/contents
+	$(call S6_GEN_SERVICE,udhcpc,$(S6_LINUX_INIT_SKELETON_DHCP_IFACE),y)
+	$(call S6_ADD_SERVICE,udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE),bundle-lan)
 	ln -sf ../run/resolv.conf $(TARGET_DIR)/etc/resolv.conf
 endef
 endif
