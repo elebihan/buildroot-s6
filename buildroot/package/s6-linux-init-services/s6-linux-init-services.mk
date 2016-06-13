@@ -10,30 +10,32 @@ S6_LINUX_INIT_SERVICES_DEPENDENCIES = s6-linux-init-skeleton
 
 S6_LINUX_INIT_SERVICES_STORE = package/s6-linux-init-services/files/etc/s6-rc/source
 
+define S6_LINUX_INIT_SERVICES_INSTALL_SERVICE
+	cp -a $(S6_LINUX_INIT_SERVICES_STORE)/$(1) \
+		$(TARGET_DIR)/etc/s6-rc/source
+	cp -a $(S6_LINUX_INIT_SERVICES_STORE)/$(1)-log \
+		$(TARGET_DIR)/etc/s6-rc/source
+	if ! grep -q $(1) $(TARGET_DIR)/etc/s6-rc/source/$(2)/contents; then \
+		echo $(1) >> $(TARGET_DIR)/etc/s6-rc/source/$(2)/contents; \
+	fi
+endef
+
 ifeq ($(BR2_PACKAGE_DROPBEAR),y)
 define S6_LINUX_INIT_SERVICES_DROPBEAR
-	cp -a $(S6_LINUX_INIT_SERVICES_STORE)/dropbear \
-		$(TARGET_DIR)/etc/s6-rc/source
-	cp -a $(S6_LINUX_INIT_SERVICES_STORE)/dropbear-log \
-		$(TARGET_DIR)/etc/s6-rc/source
-	echo dropbear >> $(TARGET_DIR)/etc/s6-rc/source/bundle-lan/contents
+	$(call S6_LINUX_INIT_SERVICES_INSTALL_SERVICE,dropbear,bundle-lan)
 endef
-S6_LINUX_INIT_SERVICES_ITEMS += S6_LINUX_INIT_SERVICES_DROPBEAR
+S6_LINUX_INIT_SERVICES_LIST += S6_LINUX_INIT_SERVICES_DROPBEAR
 endif
 
 ifeq ($(BR2_PACKAGE_RNG_TOOLS),y)
 define S6_LINUX_INIT_SERVICES_RNGD
-	cp -a $(S6_LINUX_INIT_SERVICES_STORE)/rngd \
-		$(TARGET_DIR)/etc/s6-rc/source
-	cp -a $(S6_LINUX_INIT_SERVICES_STORE)/rngd-log \
-		$(TARGET_DIR)/etc/s6-rc/source
-	echo rngd >> $(TARGET_DIR)/etc/s6-rc/source/bundle-local/contents
+	$(call S6_LINUX_INIT_SERVICES_INSTALL_SERVICE,rngd,bundle-local)
 endef
-S6_LINUX_INIT_SERVICES_ITEMS += S6_LINUX_INIT_SERVICES_RNGD
+S6_LINUX_INIT_SERVICES_LIST += S6_LINUX_INIT_SERVICES_RNGD
 endif
 
 define S6_LINUX_INIT_SERVICES_INSTALL_INIT_S6_INIT
-	$(foreach item,$(S6_LINUX_INIT_SERVICES_ITEMS),$(call $(item))$(sep))
+	$(foreach entry,$(S6_LINUX_INIT_SERVICES_LIST),$(call $(entry))$(sep))
 endef
 
 $(eval $(generic-package))
