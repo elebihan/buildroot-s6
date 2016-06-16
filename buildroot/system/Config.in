@@ -423,6 +423,12 @@ config BR2_TARGET_LOCALTIME
 
 endif # BR2_TARGET_TZ_INFO
 
+config BR2_TARGET_LDCONFIG
+	bool "Enable ldconfig"
+	default n
+	help
+	  Enable update of ld.so cache via ldconfig
+
 config BR2_ROOTFS_USERS_TABLES
 	string "Path to the users tables"
 	help
