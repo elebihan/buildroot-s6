@@ -7,6 +7,7 @@ BR2_TARGET_GENERIC_ISSUE="Welcome to S6 demo"
 BR2_INIT_S6_INIT=y
 BR2_ROOTFS_DEVICE_TABLE="system/device_table.txt $(BR2_EXTERNAL)/board/common/device_table.txt"
 BR2_SYSTEM_DHCP="eth0"
+BR2_TARGET_LDCONFIG=y
 BR2_ROOTFS_OVERLAY="$(BR2_EXTERNAL)/board/common/overlay $(BR2_EXTERNAL)/board/hardkernel/odroidc2/overlay"
 BR2_ROOTFS_POST_BUILD_SCRIPT="$(BR2_EXTERNAL)/board/hardkernel/odroidc2/post-build.sh $(BR2_EXTERNAL)/board/common/post-build.sh"
 BR2_ROOTFS_POST_IMAGE_SCRIPT="board/hardkernel/odroidc2/post-image.sh"
