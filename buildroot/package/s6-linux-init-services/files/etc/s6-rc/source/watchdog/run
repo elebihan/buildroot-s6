@@ -1,0 +1,6 @@
+#!/usr/bin/execlineb -P
+
+fdmove -c 2 1
+s6-envdir env
+import -u -d 5 PERIOD
+watchdog -F -t $PERIOD /dev/watchdog
