@@ -38,7 +38,7 @@ endef
 ifneq ($(S6_LINUX_INIT_SKELETON_DHCP_IFACE),)
 define S6_LINUX_INIT_SKELETON_INSTALL_DHCPC
 	$(call S6_GEN_SERVICE,udhcpc,$(S6_LINUX_INIT_SKELETON_DHCP_IFACE),y)
-	$(call S6_ADD_SERVICE,udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE),bundle-lan)
+	$(call S6_ADD_SERVICE,udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE),setup-net)
 	ln -sf ../run/resolv.conf $(TARGET_DIR)/etc/resolv.conf
 endef
 endif
