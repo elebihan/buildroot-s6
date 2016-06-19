@@ -1,3 +1,4 @@
 init-devtmpfs
+init-modules
 mount-sys
 devd
