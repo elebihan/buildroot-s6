@@ -1,0 +1,7 @@
+#!/usr/bin/execlineb -P
+
+fdmove -c 2 1
+s6-envuidgid www-data
+fdmove 1 3
+s6-tcpserver4 -v 2 -U -c 512 -1 -- 0.0.0.0 80
+httpd -ivv -h /srv/www

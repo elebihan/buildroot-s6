@@ -1,0 +1,40 @@
+#!/bin/sh
+
+mode=$(cat /proc/cmdline | sed -rn 's/.+(hdmimode=)(\S+)\s.+/\2/p')
+bpp=$(cat /proc/cmdline | sed -rn 's/.+(m_bpp=)(\S+)\s.+/\2/p')
+
+case $mode in
+    480*)            X=720  Y=480  ;;
+    576*)            X=720  Y=576  ;;
+    720p*)           X=1280 Y=720  ;;
+    1080*)           X=1920 Y=1080 ;;
+    2160p*)          X=3840 Y=2160 ;;
+    smpte24hz*)      X=3840 Y=2160 ;;
+    640x480p60hz*)   X=640  Y=480  ;;
+    800x480p60hz*)   X=800  Y=480  ;;
+    800x600p60hz*)   X=800  Y=600  ;;
+    1024x600p60hz*)  X=1024 Y=600  ;;
+    1024x768p60hz*)  X=1024 Y=768  ;;
+    1280x800p60hz*)  X=1280 Y=800  ;;
+    1280x1024p60hz*) X=1280 Y=1024 ;;
+    1360x768p60hz*)  X=1360 Y=768  ;;
+    1366x768p60hz*)  X=1366 Y=768  ;;
+    1440x900p60hz*)  X=1440 Y=900  ;;
+    1600x900p60hz*)  X=1600 Y=900  ;;
+    1680x1050p60hz*) X=1680 Y=1050 ;;
+    1920x1200p60hz*) X=1920 Y=1200 ;;
+esac
+
+M="0 0 $(($X - 1)) $(($Y - 1))"
+Y_VIRT=$(($Y * 2))
+fbset -fb /dev/fb0 -g $X $Y $X $Y_VIRT $bpp
+fbset -fb /dev/fb1 -g 32 32 32 32 32
+echo $mode > /sys/class/display/mode
+echo 0 > /sys/class/graphics/fb0/free_scale
+echo 1 > /sys/class/graphics/fb0/freescale_mode
+echo $M > /sys/class/graphics/fb0/free_scale_axis
+echo $M > /sys/class/graphics/fb0/window_axis
+echo 0 > /sys/class/graphics/fb1/free_scale
+
+echo 0 > /sys/class/graphics/fb0/blank
+echo 0 > /sys/class/graphics/fb1/blank

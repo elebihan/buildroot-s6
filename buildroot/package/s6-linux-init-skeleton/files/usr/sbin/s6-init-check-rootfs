@@ -1,0 +1,15 @@
+#!/usr/bin/execlineb -P
+
+s6-envdir /etc/s6-init/env
+backtick -in ROOTFS_DEVICE
+{
+  pipeline { cat /proc/cmdline } sed -ne s,^.*root=\\([^[:space:]]*\\).*,\\1,p
+}
+multisubstitute
+{
+  import REMOUNT_ROOTFS_RW
+  import ROOTFS_DEVICE
+}
+if -t { s6-test "$REMOUNT_ROOTFS_RW" = "yes" }
+if { s6-echo "Remounting root filesystem in r/w mode" }
+if { s6-mount -wt auto -o remount,rw $ROOTFS_DEVICE / }

@@ -108,6 +108,10 @@ comment "systemd needs (e)glibc toolchain, headers >= 3.10"
 
 config BR2_INIT_NONE
 	bool "None"
+	help
+	  Buildroot will not install any init system. You will
+	  have to provide your own, either with a new package
+	  or with a rootfs-overlay.
 
 endchoice
 
@@ -418,6 +422,12 @@ config BR2_TARGET_LOCALTIME
 	  expressed in UTC.
 
 endif # BR2_TARGET_TZ_INFO
+
+config BR2_TARGET_LDCONFIG
+	bool "Enable ldconfig"
+	default n
+	help
+	  Enable update of ld.so cache via ldconfig
 
 config BR2_ROOTFS_USERS_TABLES
 	string "Path to the users tables"
