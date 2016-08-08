@@ -21,7 +21,8 @@ define S6_RENDER_TEMPLATE
 	rm -rf $(TARGET_DIR)/etc/s6-rc/source/$(1)-$(2)$(3)
 	cp -a $(TARGET_DIR)/etc/s6-rc/template/$(1)-@$(3) \
 		$(TARGET_DIR)/etc/s6-rc/source/$(1)-$(2)$(3)
-	$(SED) 's/@NAME@/$(2)/g' $(TARGET_DIR)/etc/s6-rc/source/$(1)-$(2)$(3)/*
+	find $(TARGET_DIR)/etc/s6-rc/source/$(1)-$(2)$(3) -type f \
+		-exec $(SED) 's/@INSTANCE@/$(2)/g' {} \;
 endef
 
 define S6_GEN_SERVICE
