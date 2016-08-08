@@ -11,48 +11,26 @@ S6_LINUX_INIT_SKELETON_DEPENDENCIES = host-s6-rc
 S6_LINUX_INIT_SKELETON_GETTY_PORT = $(call qstrip,$(BR2_TARGET_GENERIC_GETTY_PORT))
 S6_LINUX_INIT_SKELETON_DHCP_IFACE = $(call qstrip,$(BR2_SYSTEM_DHCP))
 
+S6_RC_SOURCE_TOOL = package/s6-linux-init-skeleton/s6-rc-source
+
 define S6_LINUX_INIT_SKELETON_INSTALL_TARGET_CMDS
 	rm -f $(TARGET_DIR)/sbin/init
 	rm -rf $(TARGET_DIR)/etc/s6-rc
 	cp -a package/s6-linux-init-skeleton/files/* $(TARGET_DIR)/
 endef
 
-define S6_RENDER_TEMPLATE
-	rm -rf $(TARGET_DIR)/etc/s6-rc/source/$(1)-$(2)$(3)
-	cp -a $(TARGET_DIR)/etc/s6-rc/template/$(1)-@$(3) \
-		$(TARGET_DIR)/etc/s6-rc/source/$(1)-$(2)$(3)
-	find $(TARGET_DIR)/etc/s6-rc/source/$(1)-$(2)$(3) -type f \
-		-exec $(SED) 's/@INSTANCE@/$(2)/g' {} \;
-endef
-
-define S6_GEN_SERVICE
-	$(call S6_RENDER_TEMPLATE,$(1),$(2))
-	$(if $(3),$(call S6_RENDER_TEMPLATE,$(1),$(2),-log))
-endef
-
-define S6_ADD_SERVICE
-	if ! grep -q $(1) $(TARGET_DIR)/etc/s6-rc/source/$(2)/contents; then \
-		echo $(1) >> $(TARGET_DIR)/etc/s6-rc/source/$(2)/contents; \
-	fi
-endef
-
-define S6_DEL_SERVICE
-	$(SED) '/^$(1)$$/d' $(TARGET_DIR)/etc/s6-rc/source/$(2)/contents
-endef
-
 ifneq ($(S6_LINUX_INIT_SKELETON_DHCP_IFACE),)
 define S6_LINUX_INIT_SKELETON_MANAGE_DHCPC
-	$(call S6_GEN_SERVICE,udhcpc,default,y)
-	$(call S6_ADD_SERVICE,udhcpc-default,setup-net)
+	$(S6_RC_SOURCE_TOOL) render udhcpc-@ default setup-net \
+		$(TARGET_DIR)/etc/s6-rc/source
 	echo $(S6_LINUX_INIT_SKELETON_DHCP_IFACE) > \
 		$(TARGET_DIR)/etc/s6-rc/source/udhcpc-default/env/INTERFACE
 	ln -sf ../run/resolv.conf $(TARGET_DIR)/etc/resolv.conf
 endef
 else
 define S6_LINUX_INIT_SKELETON_MANAGE_DHCPC
-	$(call S6_DEL_SERVICE,udhcpc-default,setup-net)
-	rm -rf $(TARGET_DIR)/etc/s6-rc/source/udhcpc-default
-	rm -rf $(TARGET_DIR)/etc/s6-rc/source/udhcpc-default-log
+	$(S6_RC_SOURCE_TOOL) del -p udhcpc-default setup-net \
+		$(TARGET_DIR)/etc/s6-rc/source
 endef
 endif
 
