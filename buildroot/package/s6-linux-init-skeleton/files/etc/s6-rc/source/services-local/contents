@@ -7,3 +7,4 @@ init-coldplug
 init-urandom
 init-sysctl
 fifodir-cleanup
+setup-net
