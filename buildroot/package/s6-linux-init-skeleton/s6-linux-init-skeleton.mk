@@ -13,6 +13,17 @@ S6_LINUX_INIT_SKELETON_DHCP_IFACE = $(call qstrip,$(BR2_SYSTEM_DHCP))
 
 S6_RC_SOURCE_TOOL = package/s6-linux-init-skeleton/s6-rc-source
 
+ifeq ($(BR2_PACKAGE_BUSYBOX_WATCHDOG),y)
+define S6_LINUX_INIT_SKELETON_ENABLE_WATCHDOG
+	$(S6_RC_SOURCE_TOOL) add watchdog services-local \
+		$(TARGET_DIR)/etc/s6-rc/source
+	echo $(call qstrip,$(BR2_PACKAGE_BUSYBOX_WATCHDOG_PERIOD)) \
+		> $(TARGET_DIR)/etc/s6-rc/source/watchdog/env/PERIOD
+endef
+S6_LINUX_INIT_SKELETON_POST_INSTALL_TARGET_HOOKS += \
+	S6_LINUX_INIT_SKELETON_ENABLE_WATCHDOG
+endif
+
 define S6_LINUX_INIT_SKELETON_INSTALL_TARGET_CMDS
 	rm -f $(TARGET_DIR)/sbin/init
 	rm -rf $(TARGET_DIR)/etc/s6-rc
