@@ -45,8 +45,8 @@ endif
 
 ifneq ($(S6_LINUX_INIT_SKELETON_GETTY_PORT),)
 define S6_LINUX_INIT_SKELETON_INSTALL_GETTY
-	$(SED) 's/@NAME@/$(S6_LINUX_INIT_SKELETON_GETTY_PORT)/g' \
-		$(TARGET_DIR)/etc/s6-init/run-image/service/getty/run
+	echo $(S6_LINUX_INIT_SKELETON_GETTY_PORT) > \
+		$(TARGET_DIR)/etc/s6-init/run-image/service/getty/env/TTY
 endef
 endif
 
