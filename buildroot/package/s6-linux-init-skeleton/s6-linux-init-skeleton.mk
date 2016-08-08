@@ -43,8 +43,8 @@ ifneq ($(S6_LINUX_INIT_SKELETON_DHCP_IFACE),)
 define S6_LINUX_INIT_SKELETON_MANAGE_DHCPC
 	$(call S6_GEN_SERVICE,udhcpc,default,y)
 	$(call S6_ADD_SERVICE,udhcpc-default,setup-net)
-	$(SED) 's/default/$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)/g' \
-		$(TARGET_DIR)/etc/s6-rc/source/udhcpc-default/run
+	echo $(S6_LINUX_INIT_SKELETON_DHCP_IFACE) > \
+		$(TARGET_DIR)/etc/s6-rc/source/udhcpc-default/env/INTERFACE
 	ln -sf ../run/resolv.conf $(TARGET_DIR)/etc/resolv.conf
 endef
 else
