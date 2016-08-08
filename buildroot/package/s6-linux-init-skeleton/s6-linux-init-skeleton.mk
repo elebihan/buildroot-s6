@@ -35,11 +35,23 @@ define S6_ADD_SERVICE
 	fi
 endef
 
+define S6_DEL_SERVICE
+	$(SED) '/^$(1)$$/d' $(TARGET_DIR)/etc/s6-rc/source/$(2)/contents
+endef
+
 ifneq ($(S6_LINUX_INIT_SKELETON_DHCP_IFACE),)
-define S6_LINUX_INIT_SKELETON_INSTALL_DHCPC
-	$(call S6_GEN_SERVICE,udhcpc,$(S6_LINUX_INIT_SKELETON_DHCP_IFACE),y)
-	$(call S6_ADD_SERVICE,udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE),setup-net)
+define S6_LINUX_INIT_SKELETON_MANAGE_DHCPC
+	$(call S6_GEN_SERVICE,udhcpc,default,y)
+	$(call S6_ADD_SERVICE,udhcpc-default,setup-net)
+	$(SED) 's/default/$(S6_LINUX_INIT_SKELETON_DHCP_IFACE)/g' \
+		$(TARGET_DIR)/etc/s6-rc/source/udhcpc-default/run
 	ln -sf ../run/resolv.conf $(TARGET_DIR)/etc/resolv.conf
+endef
+else
+define S6_LINUX_INIT_SKELETON_MANAGE_DHCPC
+	$(call S6_DEL_SERVICE,udhcpc-default,setup-net)
+	rm -rf $(TARGET_DIR)/etc/s6-rc/source/udhcpc-default
+	rm -rf $(TARGET_DIR)/etc/s6-rc/source/udhcpc-default-log
 endef
 endif
 
@@ -68,7 +80,7 @@ define S6_LINUX_INIT_SKELETON_BUILD_SERVICE_DB
 endef
 
 TARGET_FINALIZE_HOOKS += S6_LINUX_INIT_SKELETON_INSTALL_GETTY
-TARGET_FINALIZE_HOOKS += S6_LINUX_INIT_SKELETON_INSTALL_DHCPC
+TARGET_FINALIZE_HOOKS += S6_LINUX_INIT_SKELETON_MANAGE_DHCPC
 TARGET_FINALIZE_HOOKS += S6_LINUX_INIT_SKELETON_REMOUNT_ROOTFS_RW
 TARGET_FINALIZE_HOOKS += S6_LINUX_INIT_SKELETON_BUILD_SERVICE_DB
 
