@@ -21,7 +21,8 @@ define S6_RENDER_TEMPLATE
 	rm -rf $(TARGET_DIR)/etc/s6-rc/source/$(1)-$(2)$(3)
 	cp -a $(TARGET_DIR)/etc/s6-rc/template/$(1)-@$(3) \
 		$(TARGET_DIR)/etc/s6-rc/source/$(1)-$(2)$(3)
-	$(SED) 's/@NAME@/$(2)/g' $(TARGET_DIR)/etc/s6-rc/source/$(1)-$(2)$(3)/*
+	find $(TARGET_DIR)/etc/s6-rc/source/$(1)-$(2)$(3) -type f \
+		-exec $(SED) 's/@INSTANCE@/$(2)/g' {} \;
 endef
 
 define S6_GEN_SERVICE
@@ -35,18 +36,35 @@ define S6_ADD_SERVICE
 	fi
 endef
 
+define S6_DEL_SERVICE
+	$(SED) '/^$(1)$$/d' $(TARGET_DIR)/etc/s6-rc/source/$(2)/contents
+endef
+
 ifneq ($(S6_LINUX_INIT_SKELETON_DHCP_IFACE),)
-define S6_LINUX_INIT_SKELETON_INSTALL_DHCPC
-	$(call S6_GEN_SERVICE,udhcpc,$(S6_LINUX_INIT_SKELETON_DHCP_IFACE),y)
-	$(call S6_ADD_SERVICE,udhcpc-$(S6_LINUX_INIT_SKELETON_DHCP_IFACE),setup-net)
+define S6_LINUX_INIT_SKELETON_MANAGE_DHCPC
+	$(call S6_GEN_SERVICE,udhcpc,default,y)
+	$(call S6_ADD_SERVICE,udhcpc-default,setup-net)
+	echo $(S6_LINUX_INIT_SKELETON_DHCP_IFACE) > \
+		$(TARGET_DIR)/etc/s6-rc/source/udhcpc-default/env/INTERFACE
 	ln -sf ../run/resolv.conf $(TARGET_DIR)/etc/resolv.conf
+endef
+else
+define S6_LINUX_INIT_SKELETON_MANAGE_DHCPC
+	$(call S6_DEL_SERVICE,udhcpc-default,setup-net)
+	rm -rf $(TARGET_DIR)/etc/s6-rc/source/udhcpc-default
+	rm -rf $(TARGET_DIR)/etc/s6-rc/source/udhcpc-default-log
 endef
 endif
 
 ifneq ($(S6_LINUX_INIT_SKELETON_GETTY_PORT),)
-define S6_LINUX_INIT_SKELETON_INSTALL_GETTY
-	$(SED) 's/@NAME@/$(S6_LINUX_INIT_SKELETON_GETTY_PORT)/g' \
-		$(TARGET_DIR)/etc/s6-init/run-image/service/getty/run
+define S6_LINUX_INIT_SKELETON_MANAGE_GETTY
+	echo $(S6_LINUX_INIT_SKELETON_GETTY_PORT) > \
+		$(TARGET_DIR)/etc/s6-init/run-image/service/getty/env/TTY
+	rm -f $(TARGET_DIR)/etc/s6-init/run-image/service/getty/down
+endef
+else
+define S6_LINUX_INIT_SKELETON_MANAGE_GETTY
+	touch $(TARGET_DIR)/etc/s6-init/run-image/service/getty/down
 endef
 endif
 
@@ -67,8 +85,8 @@ define S6_LINUX_INIT_SKELETON_BUILD_SERVICE_DB
 		$(TARGET_DIR)/etc/s6-rc/source
 endef
 
-TARGET_FINALIZE_HOOKS += S6_LINUX_INIT_SKELETON_INSTALL_GETTY
-TARGET_FINALIZE_HOOKS += S6_LINUX_INIT_SKELETON_INSTALL_DHCPC
+TARGET_FINALIZE_HOOKS += S6_LINUX_INIT_SKELETON_MANAGE_GETTY
+TARGET_FINALIZE_HOOKS += S6_LINUX_INIT_SKELETON_MANAGE_DHCPC
 TARGET_FINALIZE_HOOKS += S6_LINUX_INIT_SKELETON_REMOUNT_ROOTFS_RW
 TARGET_FINALIZE_HOOKS += S6_LINUX_INIT_SKELETON_BUILD_SERVICE_DB
 
