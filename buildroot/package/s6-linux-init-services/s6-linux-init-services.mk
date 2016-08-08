@@ -48,16 +48,6 @@ endef
 S6_LINUX_INIT_SERVICES_LIST += S6_LINUX_INIT_SERVICES_RNGD
 endif
 
-ifeq ($(BR2_PACKAGE_BUSYBOX_WATCHDOG),y)
-define S6_LINUX_INIT_SERVICES_WATCHDOG
-	$(call S6_LINUX_INIT_SERVICES_INSTALL_SERVICE,watchdog,services-local)
-	$(INSTALL) -d $(TARGET_DIR)/etc/s6-rc/source/watchdog/env
-	echo $(call qstrip,$(BR2_PACKAGE_BUSYBOX_WATCHDOG_PERIOD)) \
-		> $(TARGET_DIR)/etc/s6-rc/source/watchdog/env/PERIOD
-endef
-S6_LINUX_INIT_SERVICES_LIST += S6_LINUX_INIT_SERVICES_WATCHDOG
-endif
-
 define S6_LINUX_INIT_SERVICES_INSTALL_INIT_S6_INIT
 	$(foreach entry,$(S6_LINUX_INIT_SERVICES_LIST),$(call $(entry))$(sep))
 endef
