@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-S6_LINUX_UTILS_VERSION = v2.1.0.0
-S6_LINUX_UTILS_SITE = git://git.skarnet.org/s6-linux-utils.git
+S6_LINUX_UTILS_VERSION = 2.1.0.0
+S6_LINUX_UTILS_SITE = http://skarnet.org/software/s6-linux-utils
 S6_LINUX_UTILS_LICENSE = ISC
 S6_LINUX_UTILS_LICENSE_FILES = COPYING
 S6_LINUX_UTILS_DEPENDENCIES = skalibs
