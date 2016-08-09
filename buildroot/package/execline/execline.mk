@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-EXECLINE_VERSION = v2.1.5.0
-EXECLINE_SITE = git://git.skarnet.org/execline.git
+EXECLINE_VERSION = 2.1.5.0
+EXECLINE_SITE = http://skarnet.org/software/execline
 EXECLINE_LICENSE = ISC
 EXECLINE_LICENSE_FILES = COPYING
 EXECLINE_INSTALL_STAGING = YES
