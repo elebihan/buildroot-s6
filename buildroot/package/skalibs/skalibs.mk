@@ -10,19 +10,19 @@ SKALIBS_LICENSE = ISC
 SKALIBS_LICENSE_FILES = COPYING
 SKALIBS_INSTALL_STAGING = YES
 
-SKALIBS_CONFIGURE_OPTS = \
+SKALIBS_CONF_OPTS = \
 	--prefix=/usr \
 	--enable-force-devr \
 	--with-default-path=/sbin:/usr/sbin:/bin:/usr/bin
 
 ifeq ($(BR2_STATIC_LIBS),y)
-SKALIBS_CONFIGURE_OPTS +=  --enable-static --disable-shared
+SKALIBS_CONF_OPTS +=  --enable-static --disable-shared
 else
-SKALIBS_CONFIGURE_OPTS +=  --disable-static --enable-shared --disable-allstatic
+SKALIBS_CONF_OPTS +=  --disable-static --enable-shared --disable-allstatic
 endif
 
 define SKALIBS_CONFIGURE_CMDS
-	(cd $(@D); $(TARGET_CONFIGURE_OPTS) ./configure $(SKALIBS_CONFIGURE_OPTS))
+	(cd $(@D); $(TARGET_CONFIGURE_OPTS) ./configure $(SKALIBS_CONF_OPTS))
 endef
 
 define SKALIBS_BUILD_CMDS
@@ -37,14 +37,14 @@ define SKALIBS_INSTALL_STAGING_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) DESTDIR=$(STAGING_DIR) install
 endef
 
-HOST_SKALIBS_CONFIGURE_OPTS = \
+HOST_SKALIBS_CONF_OPTS = \
 	--prefix=/usr \
 	--disable-static \
 	--enable-shared \
 	--disable-allstatic
 
 define HOST_SKALIBS_CONFIGURE_CMDS
-	(cd $(@D); $(HOST_CONFIGURE_OPTS) ./configure $(HOST_SKALIBS_CONFIGURE_OPTS))
+	(cd $(@D); $(HOST_CONFIGURE_OPTS) ./configure $(HOST_SKALIBS_CONF_OPTS))
 endef
 
 define HOST_SKALIBS_BUILD_CMDS
