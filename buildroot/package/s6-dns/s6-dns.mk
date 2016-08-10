@@ -11,7 +11,7 @@ S6_DNS_LICENSE_FILES = COPYING
 S6_DNS_INSTALL_STAGING = YES
 S6_DNS_DEPENDENCIES = skalibs
 
-S6_DNS_CONFIGURE_OPTS = \
+S6_DNS_CONF_OPTS = \
 	--prefix=/usr \
 	--with-sysdeps=$(STAGING_DIR)/usr/lib/skalibs/sysdeps \
 	--with-include=$(STAGING_DIR)/usr/include \
@@ -19,13 +19,13 @@ S6_DNS_CONFIGURE_OPTS = \
 	--with-lib=$(STAGING_DIR)/usr/lib/skalibs
 
 ifeq ($(BR2_STATIC_LIBS),y)
-S6_DNS_CONFIGURE_OPTS +=  --enable-static --disable-shared
+S6_DNS_CONF_OPTS +=  --enable-static --disable-shared
 else
-S6_DNS_CONFIGURE_OPTS +=  --disable-static --enable-shared --disable-allstatic
+S6_DNS_CONF_OPTS +=  --disable-static --enable-shared --disable-allstatic
 endif
 
 define S6_DNS_CONFIGURE_CMDS
-	(cd $(@D); $(TARGET_CONFIGURE_OPTS) ./configure $(S6_DNS_CONFIGURE_OPTS))
+	(cd $(@D); $(TARGET_CONFIGURE_OPTS) ./configure $(S6_DNS_CONF_OPTS))
 endef
 
 define S6_DNS_BUILD_CMDS
