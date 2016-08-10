@@ -11,7 +11,7 @@ EXECLINE_LICENSE_FILES = COPYING
 EXECLINE_INSTALL_STAGING = YES
 EXECLINE_DEPENDENCIES = skalibs
 
-EXECLINE_CONFIGURE_OPTS = \
+EXECLINE_CONF_OPTS = \
 	--prefix=/usr \
 	--with-sysdeps=$(STAGING_DIR)/usr/lib/skalibs/sysdeps \
 	--with-include=$(STAGING_DIR)/usr/include \
@@ -19,30 +19,30 @@ EXECLINE_CONFIGURE_OPTS = \
 	--with-lib=$(STAGING_DIR)/usr/lib/skalibs
 
 ifeq ($(BR2_STATIC_LIBS),y)
-EXECLINE_CONFIGURE_OPTS +=  --enable-static --disable-shared
+EXECLINE_CONF_OPTS +=  --enable-static --disable-shared
 else
-EXECLINE_CONFIGURE_OPTS +=  --disable-static --enable-shared --disable-allstatic
+EXECLINE_CONF_OPTS +=  --disable-static --enable-shared --disable-allstatic
 endif
 
 define EXECLINE_CONFIGURE_CMDS
-	(cd $(@D); $(TARGET_CONFIGURE_OPTS) ./configure $(EXECLINE_CONFIGURE_OPTS))
+	(cd $(@D); $(TARGET_CONFIGURE_OPTS) ./configure $(EXECLINE_CONF_OPTS))
 endef
 
 define EXECLINE_BUILD_CMDS
-	$(TARGET_MAKE_ENV) $(MAKE1) -C $(@D)
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)
 endef
 
 define EXECLINE_INSTALL_TARGET_CMDS
-	$(TARGET_MAKE_ENV) $(MAKE1) -C $(@D) DESTDIR=$(TARGET_DIR) install
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) DESTDIR=$(TARGET_DIR) install
 endef
 
 define EXECLINE_INSTALL_STAGING_CMDS
-	$(TARGET_MAKE_ENV) $(MAKE1) -C $(@D) DESTDIR=$(STAGING_DIR) install
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) DESTDIR=$(STAGING_DIR) install
 endef
 
 HOST_EXECLINE_DEPENDENCIES = host-skalibs
 
-HOST_EXECLINE_CONFIGURE_OPTS = \
+HOST_EXECLINE_CONF_OPTS = \
 	--prefix=/usr \
 	--with-sysdeps=$(HOST_DIR)/usr/lib/skalibs/sysdeps \
 	--with-include=$(HOST_DIR)/usr/include \
@@ -52,7 +52,7 @@ HOST_EXECLINE_CONFIGURE_OPTS = \
 	--disable-allstatic
 
 define HOST_EXECLINE_CONFIGURE_CMDS
-	(cd $(@D); $(HOST_CONFIGURE_OPTS) ./configure $(HOST_EXECLINE_CONFIGURE_OPTS))
+	(cd $(@D); $(HOST_CONFIGURE_OPTS) ./configure $(HOST_EXECLINE_CONF_OPTS))
 endef
 
 define HOST_EXECLINE_BUILD_CMDS
