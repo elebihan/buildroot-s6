@@ -13,13 +13,8 @@ SKALIBS_INSTALL_STAGING = YES
 SKALIBS_CONF_OPTS = \
 	--prefix=/usr \
 	--enable-force-devr \
-	--with-default-path=/sbin:/usr/sbin:/bin:/usr/bin
-
-ifeq ($(BR2_STATIC_LIBS),y)
-SKALIBS_CONF_OPTS +=  --enable-static --disable-shared
-else
-SKALIBS_CONF_OPTS +=  --disable-static --enable-shared --disable-allstatic
-endif
+	--with-default-path=/sbin:/usr/sbin:/bin:/usr/bin \
+	$(SHARED_STATIC_LIBS_OPTS)
 
 define SKALIBS_CONFIGURE_CMDS
 	(cd $(@D); $(TARGET_CONFIGURE_OPTS) ./configure $(SKALIBS_CONF_OPTS))
