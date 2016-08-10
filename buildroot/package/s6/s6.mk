@@ -11,7 +11,7 @@ S6_LICENSE_FILES = COPYING
 S6_INSTALL_STAGING = YES
 S6_DEPENDENCIES = execline
 
-S6_CONFIGURE_OPTS = \
+S6_CONF_OPTS = \
 	--prefix=/usr \
 	--with-sysdeps=$(STAGING_DIR)/usr/lib/skalibs/sysdeps \
 	--with-include=$(STAGING_DIR)/usr/include \
@@ -20,13 +20,13 @@ S6_CONFIGURE_OPTS = \
 	--with-lib=$(STAGING_DIR)/usr/lib/skalibs
 
 ifeq ($(BR2_STATIC_LIBS),y)
-S6_CONFIGURE_OPTS +=  --enable-static --disable-shared
+S6_CONF_OPTS +=  --enable-static --disable-shared
 else
-S6_CONFIGURE_OPTS +=  --disable-static --enable-shared --disable-allstatic
+S6_CONF_OPTS +=  --disable-static --enable-shared --disable-allstatic
 endif
 
 define S6_CONFIGURE_CMDS
-	(cd $(@D); $(TARGET_CONFIGURE_OPTS) ./configure $(S6_CONFIGURE_OPTS))
+	(cd $(@D); $(TARGET_CONFIGURE_OPTS) ./configure $(S6_CONF_OPTS))
 endef
 
 define S6_BUILD_CMDS
@@ -43,7 +43,7 @@ endef
 
 HOST_S6_DEPENDENCIES = host-execline
 
-HOST_S6_CONFIGURE_OPTS = \
+HOST_S6_CONF_OPTS = \
 	--prefix=/usr \
 	--with-sysdeps=$(HOST_DIR)/usr/lib/skalibs/sysdeps \
 	--with-include=$(HOST_DIR)/usr/include \
@@ -53,7 +53,7 @@ HOST_S6_CONFIGURE_OPTS = \
 	--disable-allstatic
 
 define HOST_S6_CONFIGURE_CMDS
-	(cd $(@D); $(HOST_CONFIGURE_OPTS) ./configure $(HOST_S6_CONFIGURE_OPTS))
+	(cd $(@D); $(HOST_CONFIGURE_OPTS) ./configure $(HOST_S6_CONF_OPTS))
 endef
 
 define HOST_S6_BUILD_CMDS
