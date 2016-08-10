@@ -17,13 +17,9 @@ S6_CONF_OPTS = \
 	--with-include=$(STAGING_DIR)/usr/include \
 	--with-dynlib=$(STAGING_DIR)/usr/lib \
 	--with-lib=$(STAGING_DIR)/usr/lib/execline \
-	--with-lib=$(STAGING_DIR)/usr/lib/skalibs
-
-ifeq ($(BR2_STATIC_LIBS),y)
-S6_CONF_OPTS +=  --enable-static --disable-shared
-else
-S6_CONF_OPTS +=  --disable-static --enable-shared --disable-allstatic
-endif
+	--with-lib=$(STAGING_DIR)/usr/lib/skalibs \
+	$(if $(BR2_STATIC_LIBS),,--disable-allstatic) \
+	$(SHARED_STATIC_LIBS_OPTS)
 
 define S6_CONFIGURE_CMDS
 	(cd $(@D); $(TARGET_CONFIGURE_OPTS) ./configure $(S6_CONF_OPTS))
@@ -36,6 +32,12 @@ endef
 define S6_INSTALL_TARGET_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) DESTDIR=$(TARGET_DIR) install
 endef
+
+define S6_REMOVE_STATIC_LIB_DIR
+	rm -rf $(TARGET_DIR)/usr/lib/s6
+endef
+
+S6_POST_INSTALL_TARGET_HOOKS += S6_REMOVE_STATIC_LIB_DIR
 
 define S6_INSTALL_STAGING_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) DESTDIR=$(STAGING_DIR) install

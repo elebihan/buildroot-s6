@@ -19,13 +19,9 @@ S6_NETWORKING_CONF_OPTS = \
 	--with-lib=$(STAGING_DIR)/usr/lib/execline \
 	--with-lib=$(STAGING_DIR)/usr/lib/s6 \
 	--with-lib=$(STAGING_DIR)/usr/lib/s6-dns \
-	--with-lib=$(STAGING_DIR)/usr/lib/skalibs
-
-ifeq ($(BR2_STATIC_LIBS),y)
-S6_NETWORKING_CONF_OPTS +=  --enable-static --disable-shared
-else
-S6_NETWORKING_CONF_OPTS +=  --disable-static --enable-shared --disable-allstatic
-endif
+	--with-lib=$(STAGING_DIR)/usr/lib/skalibs \
+	$(if $(BR2_STATIC_LIBS),,--disable-allstatic) \
+	$(SHARED_STATIC_LIBS_OPTS)
 
 define S6_NETWORKING_CONFIGURE_CMDS
 	(cd $(@D); $(TARGET_CONFIGURE_OPTS) ./configure $(S6_NETWORKING_CONF_OPTS))
@@ -34,6 +30,12 @@ endef
 define S6_NETWORKING_BUILD_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)
 endef
+
+define S6_NETWORKING_REMOVE_STATIC_LIB_DIR
+	rm -rf $(TARGET_DIR)/usr/lib/s6-networking
+endef
+
+S6_NETWORKING_POST_INSTALL_TARGET_HOOKS += S6_NETWORKING_REMOVE_STATIC_LIB_DIR
 
 define S6_NETWORKING_INSTALL_TARGET_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) DESTDIR=$(TARGET_DIR) install
