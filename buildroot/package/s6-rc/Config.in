@@ -1,6 +1,5 @@
 config BR2_PACKAGE_S6_RC
 	bool "s6-rc"
-	depends on BR2_TOOLCHAIN_USES_GLIBC || BR2_TOOLCHAIN_USES_MUSL
 	select BR2_PACKAGE_S6
 	help
 	  s6-rc is a service manager for s6-based systems, i.e. a suite of
@@ -9,6 +8,3 @@ config BR2_PACKAGE_S6_RC
 	  a dependency tree.
 
 	  http://skarnet.org/software/s6-rc/
-
-comment "s6-rc needs an (e)glibc or musl toolchain"
-	depends on !BR2_TOOLCHAIN_USES_GLIBC && !BR2_TOOLCHAIN_USES_MUSL
