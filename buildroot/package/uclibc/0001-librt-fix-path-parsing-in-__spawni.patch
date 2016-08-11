@@ -1,0 +1,40 @@
+From 412c8ca0a7e5fe335a88679564f12f2e65fa7ff6 Mon Sep 17 00:00:00 2001
+From: Eric Le Bihan <eric.le.bihan.dev@free.fr>
+Date: Tue, 9 Aug 2016 16:16:21 +0200
+Subject: [PATCH] librt: fix path parsing in __spawni()
+
+__spawni() loops forever when parsing the path variable due to incorrect
+pointer update. This patch fixes the issue.
+
+Signed-off-by: Eric Le Bihan <eric.le.bihan.dev@free.fr>
+---
+ librt/spawn.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/librt/spawn.c b/librt/spawn.c
+index 79f5b06..25e3994 100644
+--- a/librt/spawn.c
++++ b/librt/spawn.c
+@@ -203,9 +203,10 @@ __spawni(pid_t *pid, const char *file,
+ 		*--name = '/';
+ 	}
+ 
+-	char *p;
++	char *p = (char *)path;
+ 	do {
+ 		char *startp;
++		path = p;
+ 		p = strchrnul(path, ':');
+ 
+ 		/* Two adjacent colons, or a colon at the beginning or the end
+@@ -233,7 +234,6 @@ __spawni(pid_t *pid, const char *file,
+ 			goto error;
+ 		}
+ 
+-		path = p;
+ 	} while (*p++ != '\0');
+ 
+ error:
+-- 
+2.1.4
+
