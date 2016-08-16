@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-S6_VERSION = 2.3.0.0
-S6_SITE = http://skarnet.org/software/s6
+S6_VERSION = 77ba7d530f39ea297fe28b23bc3f01c480a352eb
+S6_SITE = git://skarnet.org/s6
 S6_LICENSE = ISC
 S6_LICENSE_FILES = COPYING
 S6_INSTALL_STAGING = YES
