@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-S6_DNS_VERSION = 2.0.1.0
-S6_DNS_SITE = http://skarnet.org/software/s6-dns
+S6_DNS_VERSION = 98083a30abf1d7b074d4e23739db42576b63c3e6
+S6_DNS_SITE = git://skarnet.org/s6-dns
 S6_DNS_LICENSE = ISC
 S6_DNS_LICENSE_FILES = COPYING
 S6_DNS_INSTALL_STAGING = YES
