@@ -1,0 +1,36 @@
+From 564e3178b135b4b24d0d1da5ac35ac9e35d9c489 Mon Sep 17 00:00:00 2001
+From: Eric Le Bihan <eric.le.bihan.dev@free.fr>
+Date: Tue, 16 Aug 2016 12:28:18 +0200
+Subject: [PATCH] Fix spawn_lib dependency for s6-rc-init
+
+Signed-off-by: Eric Le Bihan <eric.le.bihan.dev@free.fr>
+---
+ package/deps.mak              | 2 +-
+ src/s6-rc/deps-exe/s6-rc-init | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/package/deps.mak b/package/deps.mak
+index 3e3938a..054d439 100644
+--- a/package/deps.mak
++++ b/package/deps.mak
+@@ -46,7 +46,7 @@ s6-rc-dryrun: EXTRA_LIBS := ${TAINNOW_LIB}
+ s6-rc-dryrun: src/s6-rc/s6-rc-dryrun.o -lskarnet
+ s6-rc-fdholder-filler: EXTRA_LIBS := ${TAINNOW_LIB} ${SOCKET_LIB}
+ s6-rc-fdholder-filler: src/s6-rc/s6-rc-fdholder-filler.o -ls6 -lskarnet
+-s6-rc-init: EXTRA_LIBS := ${TAINNOW_LIB} ${SOCKET_LIB}
++s6-rc-init: EXTRA_LIBS := ${TAINNOW_LIB} ${SOCKET_LIB} ${SPAWN_LIB}
+ s6-rc-init: src/s6-rc/s6-rc-init.o ${LIBS6RC} -ls6 -lskarnet
+ s6-rc-oneshot-run: EXTRA_LIBS :=
+ s6-rc-oneshot-run: src/s6-rc/s6-rc-oneshot-run.o ${LIBS6RC} -lskarnet
+diff --git a/src/s6-rc/deps-exe/s6-rc-init b/src/s6-rc/deps-exe/s6-rc-init
+index b5622f9..5fb6d66 100644
+--- a/src/s6-rc/deps-exe/s6-rc-init
++++ b/src/s6-rc/deps-exe/s6-rc-init
+@@ -3,3 +3,4 @@ ${LIBS6RC}
+ -lskarnet
+ ${TAINNOW_LIB}
+ ${SOCKET_LIB}
++${SPAWN_LIB}
+-- 
+2.4.11
+
