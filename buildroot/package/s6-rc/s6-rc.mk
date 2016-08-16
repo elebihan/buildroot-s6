@@ -22,14 +22,12 @@ S6_RC_CONF_OPTS = \
 	$(if $(BR2_STATIC_LIBS),,--disable-allstatic) \
 	$(SHARED_STATIC_LIBS_OPTS)
 
-S6_RC_MAKE_OPTS = $(if $(BR2_TOOLCHAIN_USES_UCLIBC),LDLIBS=-lrt)
-
 define S6_RC_CONFIGURE_CMDS
 	(cd $(@D); $(TARGET_CONFIGURE_OPTS) ./configure $(S6_RC_CONF_OPTS))
 endef
 
 define S6_RC_BUILD_CMDS
-	$(TARGET_MAKE_ENV) $(MAKE) $(S6_RC_MAKE_OPTS) -C $(@D)
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)
 endef
 
 define S6_RC_REMOVE_STATIC_LIB_DIR
