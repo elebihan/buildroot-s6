@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-S6_VERSION = 77ba7d530f39ea297fe28b23bc3f01c480a352eb
+S6_VERSION = 977636aa5f5ae771fe42dcb2787b8fea5fb3dff9
 S6_SITE = git://skarnet.org/s6
 S6_LICENSE = ISC
 S6_LICENSE_FILES = COPYING
