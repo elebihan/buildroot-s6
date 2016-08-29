@@ -1,12 +1,8 @@
 config BR2_PACKAGE_SKALIBS
 	bool "skalibs"
-	depends on BR2_TOOLCHAIN_USES_GLIBC || BR2_TOOLCHAIN_USES_MUSL
 	help
 	  skalibs is a package centralizing the free software / open source C
 	  development files used for building all software at skarnet.org:
 	  it contains essentially general-purpose libraries.
 
 	  http://skarnet.org/software/skalibs/
-
-comment "skalibs need an (e)glibc or musl toolchain"
-	depends on !BR2_TOOLCHAIN_USES_GLIBC && !BR2_TOOLCHAIN_USES_MUSL

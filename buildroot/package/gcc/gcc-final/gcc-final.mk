@@ -76,7 +76,7 @@ endif
 
 # Disable shared libs like libstdc++ if we do static since it confuses linking
 ifeq ($(BR2_STATIC_LIBS),y)
-HOST_GCC_FINAL_CONF_OPTS += --disable-shared
+HOST_GCC_FINAL_CONF_OPTS += --disable-shared --disable-libcilkrts
 else
 HOST_GCC_FINAL_CONF_OPTS += --enable-shared
 endif

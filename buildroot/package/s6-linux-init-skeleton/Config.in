@@ -1,7 +1,6 @@
 config BR2_PACKAGE_S6_LINUX_INIT_SKELETON
 	bool
 	depends on BR2_INIT_S6_INIT
-	depends on BR2_TOOLCHAIN_USES_GLIBC || BR2_TOOLCHAIN_USES_MUSL
 	select BR2_PACKAGE_S6_RC
 	select BR2_PACKAGE_S6_LINUX_UTILS
 	select BR2_PACKAGE_S6_PORTABLE_UTILS
@@ -11,6 +10,3 @@ config BR2_PACKAGE_S6_LINUX_INIT_SKELETON
 	  Init system based on s6 for Linux systems
 
 	  http://skarnet.org/software/s6-rc/why.html
-
-comment "s6-linux-init-skeleton needs an (e)glibc or musl toolchain"
-	depends on !BR2_TOOLCHAIN_USES_GLIBC && !BR2_TOOLCHAIN_USES_MUSL

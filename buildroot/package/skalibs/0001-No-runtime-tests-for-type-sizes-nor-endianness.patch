@@ -1,6 +1,6 @@
-From bb3505b564b4aba061c9f3167dbcc1460c690501 Mon Sep 17 00:00:00 2001
+From dd537a560adfc7f647db726b67c4b915dcdef096 Mon Sep 17 00:00:00 2001
 From: Eric Le Bihan <eric.le.bihan.dev@free.fr>
-Date: Mon, 14 Sep 2015 12:43:27 +0200
+Date: Tue, 16 Aug 2016 00:55:08 +0200
 Subject: [PATCH] No runtime tests for type sizes nor endianness
 
 Replace build and execution of runtime test programs for determining
@@ -11,20 +11,20 @@ This improves support for cross-compilation.
 
 Signed-off-by: Eric Le Bihan <eric.le.bihan.dev@free.fr>
 ---
- configure                     | 38 ++++++++++++++++++++++++++++++++------
+ configure                     | 39 ++++++++++++++++++++++++++++++++-------
  src/sysdeps/trybigendian.c    | 16 ++++++++++++++++
  src/sysdeps/trylittleendian.c | 16 ++++++++++++++++
- 3 files changed, 64 insertions(+), 6 deletions(-)
+ 3 files changed, 64 insertions(+), 7 deletions(-)
  create mode 100644 src/sysdeps/trybigendian.c
  create mode 100644 src/sysdeps/trylittleendian.c
 
 diff --git a/configure b/configure
-index 910fb7b..4503178 100755
+index 29688da..913ef71 100755
 --- a/configure
 +++ b/configure
-@@ -155,10 +155,28 @@ choose () {
+@@ -154,10 +154,28 @@ choose () {
  
- trytypesize() {
+ trytypesize () {
    echo "Checking size of $3..."
 -  $CC_AUTO $CPPFLAGS_AUTO $CFLAGS_AUTO $LDFLAGS_AUTO -o trysizeof$1 src/sysdeps/trysizeof$1.c
 -  type_size=$(./trysizeof$1) || fail "$0: unable to determine size of $3"
@@ -54,12 +54,14 @@ index 910fb7b..4503178 100755
    echo "sizeof$1: $type_size" >> $sysdeps/sysdeps
    echo "#define ${package_macro_name}_SIZEOF$2 $type_size" >> $sysdeps/sysdeps.h
    echo "#define ${package_macro_name}_$2_BITS $type_bits" >> $sysdeps/sysdeps.h
-@@ -432,12 +450,20 @@ EOF
+@@ -458,13 +476,20 @@ EOF
    fi
+   exec 3>&-
  
-   echo "Checking system endianness..."
+-  echo "Checking system endianness..."
 -  $CC_AUTO $CPPFLAGS_AUTO $CFLAGS_AUTO -o tryendianness src/sysdeps/tryendianness.c
 -  endianness=$(./tryendianness) || fail "$0: unable to determine endianness"
++    echo "Checking system endianness..."
 +  if $CC_AUTO $CPPFLAGS_AUTO $CFLAGS_AUTO -o trybigendian src/sysdeps/trybigendian.c 2>/dev/null; then
 +      endianness=big
 +  else
@@ -69,7 +71,6 @@ index 910fb7b..4503178 100755
 +          fail "$0: unable to determine endianness"
 +      fi
 +  fi
-+
    echo "endianness: $endianness" >> $sysdeps/sysdeps
    echo "#define ${package_macro_name}_ENDIANNESS \"$endianness\"" >> $sysdeps/sysdeps.h
    echo "  ... $endianness"
@@ -123,5 +124,5 @@ index 0000000..eba065a
 +	return 0;
 +}
 -- 
-2.5.1
+2.4.11
 

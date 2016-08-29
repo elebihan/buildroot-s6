@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-S6_RC_VERSION = 0.0.3.0
-S6_RC_SITE = http://skarnet.org/software/s6-rc
+S6_RC_VERSION = a5dff0ba5c53e5849d1b346c688c5497324d0f2c
+S6_RC_SITE = git://skarnet.org/s6-rc
 S6_RC_LICENSE = ISC
 S6_RC_LICENSE_FILES = COPYING
 S6_RC_INSTALL_STAGING = YES
