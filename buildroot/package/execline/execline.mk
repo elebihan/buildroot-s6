@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-EXECLINE_VERSION = 61c85a27095a6477195736ae065541acfc5d5098
+EXECLINE_VERSION = 134edc9b263cf09a84efab138afc1a852d476a98
 EXECLINE_SITE = git://skarnet.org/execline
 EXECLINE_LICENSE = ISC
 EXECLINE_LICENSE_FILES = COPYING
