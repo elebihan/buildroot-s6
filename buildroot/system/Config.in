@@ -76,9 +76,6 @@ config BR2_INIT_S6_INIT
 	bool "s6 init"
 	select BR2_PACKAGE_S6_LINUX_INIT_SKELETON
 
-comment "s6 init needs an (e)glibc or musl toolchain"
-	depends on !BR2_TOOLCHAIN_USES_GLIBC && !BR2_TOOLCHAIN_USES_MUSL
-
 config BR2_INIT_SYSV
 	bool "systemV"
 	select BR2_PACKAGE_BUSYBOX_SHOW_OTHERS # sysvinit
