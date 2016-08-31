@@ -1,5 +1,0 @@
-#!/usr/bin/execlineb -P
-s6-envdir env
-import -i INTERFACE
-fdmove -c 2 1
-udhcpc -f -i $INTERFACE -x lease:86400
