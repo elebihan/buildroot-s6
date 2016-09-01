@@ -1,5 +1,0 @@
-#!/usr/bin/execlineb -P
-
-s6-envdir env
-import -u TTY
-getty -L -H DEBUG 115200 $TTY

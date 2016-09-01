@@ -1,4 +1,0 @@
-#!/usr/bin/execlineb -P
-
-foreground { /etc/rc.tini }
-s6-svscanctl -q -- /run/service

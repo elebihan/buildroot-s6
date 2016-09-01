@@ -74,7 +74,7 @@ config BR2_INIT_BUSYBOX
 
 config BR2_INIT_S6_INIT
 	bool "s6 init"
-	select BR2_PACKAGE_S6_LINUX_INIT_SKELETON
+	select BR2_PACKAGE_S6_BR2_INIT_SKELETON
 
 config BR2_INIT_SYSV
 	bool "systemV"

@@ -1,3 +1,0 @@
-forbacktickx MODULE { redirfd -r 0 /etc/modules.conf s6-cat }
-import -u MODULE
-modprobe $MODULE

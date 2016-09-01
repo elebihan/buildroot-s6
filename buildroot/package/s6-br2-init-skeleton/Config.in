@@ -1,0 +1,13 @@
+config BR2_PACKAGE_S6_BR2_INIT_SKELETON
+	bool
+	depends on BR2_INIT_S6_INIT
+	select BR2_PACKAGE_S6_RC
+	select BR2_PACKAGE_S6_LINUX_UTILS
+	select BR2_PACKAGE_S6_PORTABLE_UTILS
+	select BR2_PACKAGE_S6_NETWORKING
+	select BR2_PACKAGE_HOST_S6_RC
+	help
+	  Root file system skeleton with s6-based init for Buildroot-generated
+	  embedded systems.
+
+	  https://github.com/elebihan/s6-br2-init-skeleton
