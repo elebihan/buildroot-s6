@@ -10,24 +10,20 @@ S6_BR2_INIT_SKELETON_DEPENDENCIES = host-s6-rc host-s6-br2-init-skeleton
 
 S6_BR2_INIT_SKELETON_GETTY_PORT = $(call qstrip,$(BR2_TARGET_GENERIC_GETTY_PORT))
 S6_BR2_INIT_SKELETON_DHCP_IFACE = $(call qstrip,$(BR2_SYSTEM_DHCP))
+S6_BR2_INIT_SKELETON_WATCHDOG_PERIOD = $(call qstrip,$(BR2_PACKAGE_BUSYBOX_WATCHDOG_PERIOD))
 
 S6_RC_SOURCE_TOOL = $(HOST_DIR)/usr/bin/s6-rc-source
-
-ifeq ($(BR2_PACKAGE_BUSYBOX_WATCHDOG),y)
-define S6_BR2_INIT_SKELETON_ENABLE_WATCHDOG
-	$(S6_RC_SOURCE_TOOL) add watchdog services-local \
-		$(TARGET_DIR)/etc/s6-rc/source
-	echo $(call qstrip,$(BR2_PACKAGE_BUSYBOX_WATCHDOG_PERIOD)) \
-		> $(TARGET_DIR)/etc/s6-rc/source/watchdog/env/PERIOD
-endef
-S6_BR2_INIT_SKELETON_POST_INSTALL_TARGET_HOOKS += \
-	S6_BR2_INIT_SKELETON_ENABLE_WATCHDOG
-endif
 
 S6_BR2_INIT_SKELETON_CONF_OPTS = \
 	--prefix=/ \
 	--enable-sbin-init=yes \
 	--enable-debug-console=no
+
+ifeq ($(BR2_PACKAGE_BUSYBOX_WATCHDOG),y)
+S6_BR2_INIT_SKELETON_CONF_OPTS += \
+	--enable-watchdog=yes \
+	--with-watchdog-period=$(S6_BR2_INIT_SKELETON_WATCHDOG_PERIOD)
+endif
 
 define S6_BR2_INIT_SKELETON_CONFIGURE_CMDS
 	(cd $(@D); ./configure $(S6_BR2_INIT_SKELETON_CONF_OPTS))
