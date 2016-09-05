@@ -15,10 +15,6 @@ OPENNTPD_AUTORECONF = YES
 # to use -pthread
 OPENNTPD_CONF_ENV += CFLAGS="$(TARGET_CFLAGS) -pthread"
 
-# openntpd uses pthread functions for arc4random emulation but forgets
-# to use -pthread
-OPENNTPD_CONF_ENV += CFLAGS="$(TARGET_CFLAGS) -pthread"
-
 define OPENNTPD_INSTALL_INIT_SYSTEMD
 	$(INSTALL) -D -m 0644 package/openntpd/ntpd.service \
 		$(TARGET_DIR)/usr/lib/systemd/system/ntpd.service

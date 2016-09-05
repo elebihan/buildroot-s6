@@ -6,9 +6,6 @@ comment "rpm needs a toolchain w/ threads"
 comment "rpm needs a toolchain w/ gcc >= 5"
 	depends on !BR2_TOOLCHAIN_GCC_AT_LEAST_5 && BR2_sh
 
-comment "rpm needs a toolchain w/ gcc >= 5"
-	depends on !BR2_TOOLCHAIN_GCC_AT_LEAST_5 && BR2_sh
-
 config BR2_PACKAGE_RPM
 	bool "rpm"
 	# triggers internal compiler error
