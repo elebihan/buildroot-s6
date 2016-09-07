@@ -106,6 +106,7 @@ config BR2_INIT_BUSYBOX
 
 config BR2_INIT_S6_INIT
 	bool "s6 init"
+	depends on BR2_USE_MMU # s6
 	select BR2_PACKAGE_S6_BR2_INIT_SKELETON
 
 config BR2_INIT_SYSV
