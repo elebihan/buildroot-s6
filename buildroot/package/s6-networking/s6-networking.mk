@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-S6_NETWORKING_VERSION = 5d417a186a73712b22faae4d1b9654c095342aaa
-S6_NETWORKING_SITE = git://skarnet.org/s6-networking
+S6_NETWORKING_VERSION = 2.2.0.0
+S6_NETWORKING_SITE = http://skarnet.org/software/s6-networking
 S6_NETWORKING_LICENSE = ISC
 S6_NETWORKING_LICENSE_FILES = COPYING
 S6_NETWORKING_INSTALL_STAGING = YES
