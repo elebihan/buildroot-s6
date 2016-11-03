@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-S6_PORTABLE_UTILS_VERSION = 044fde32c34646e26d401cdbdecc426a659d7bd0
-S6_PORTABLE_UTILS_SITE = git://skarnet.org/s6-portable-utils
+S6_PORTABLE_UTILS_VERSION = 2.1.0.0
+S6_PORTABLE_UTILS_SITE = http://skarnet.org/software/s6-portable-utils
 S6_PORTABLE_UTILS_LICENSE = ISC
 S6_PORTABLE_UTILS_LICENSE_FILES = COPYING
 S6_PORTABLE_UTILS_DEPENDENCIES = skalibs
